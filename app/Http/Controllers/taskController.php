@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\task;
+use App\Models\Task;
 
 class taskController extends Controller
 {
@@ -13,9 +13,8 @@ class taskController extends Controller
     public function index()
     {
         //
-        $tasks= task::paginate();
-        return view('task.index');
-        ->with('i', (request()->input('page', 1)-1)* tasks->perPage());
+        $tasks['tasks']=Task::all();
+        return view('task.index', compact('tasks'));
     }
 
     /**
@@ -24,6 +23,8 @@ class taskController extends Controller
     public function create()
     {
         //
+        $tasks = Task::all();
+        return view ('task.create', compact('tasks'));
     }
 
     /**
@@ -31,10 +32,10 @@ class taskController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(task::$rules);
-        $taskData = request()->except("_token");
-        task::insert($taskData);
-        return redirect()->route('task.index')
+        request()->validate(Task::$rules);
+        $taskData=request()->except("_token");
+        Task::insert($taskData);
+        return redirect()->route('task.index');
     }
 
     /**
@@ -59,6 +60,7 @@ class taskController extends Controller
     public function update(Request $request, string $id)
     {
         //
+
     }
 
     /**

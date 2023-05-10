@@ -1,5 +1,8 @@
-Añadir tarea
-<form action="{{url('/task') }}" method="post">
-    @csrf
-    @include('task.form')
-</form>   
+@extends('layouts.app')
+@section('contend')
+    Añadir tarea
+    <form action="{{ url('/task') }}" method="POST">
+        @csrf
+        @include('task.form')
+    </form>   
+@endsection
